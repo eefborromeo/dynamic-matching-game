@@ -1,6 +1,5 @@
 import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import mountains from '../assets/mountains.svg';
 import secondaryBg from '../assets/secondary-bg.svg';
 import foreground from '../assets/foreground.svg';
 
@@ -33,8 +32,8 @@ export default function Parallax({
 				<motion.div
 					className="absolute inset-0 z-0"
 					style={{
-						backgroundImage: `url(${mountains})`,
-						backgroundPosition: 'center 80%',
+						backgroundImage: `url('/mountains.svg')`,
+						backgroundPosition: 'center 70%',
 						backgroundSize: 'contain',
 						backgroundRepeat: 'no-repeat',
 						y: mountainsBackgroundY,

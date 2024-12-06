@@ -1,4 +1,3 @@
-import mountains from '../assets/mountains.svg';
 import secondaryBg from '../assets/secondary-bg.svg';
 import foreground from '../assets/foreground.svg';
 import GameControls from './GameControls';
@@ -15,7 +14,7 @@ export default function Game() {
 					<div
 						className="absolute inset-0 z-0"
 						style={{
-							backgroundImage: `url(${mountains})`,
+							backgroundImage: `url('/mountains.svg')`,
 							backgroundPosition: 'bottom',
 							backgroundSize: 'contain',
 							backgroundRepeat: 'no-repeat',
