@@ -129,9 +129,11 @@ function GameProvider({ children }: { children: React.ReactNode }) {
 		shuffledCards,
 		firstSelectedCard,
 		secondSelectedCard,
+		isChecking,
 		handleIncrement,
 		handleDecrement,
 		handleInputChange,
+		handleCardClick,
 		resetGame,
 	};
 
