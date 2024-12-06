@@ -1,10 +1,11 @@
 import { useGame } from '../context/GameContext';
 
 export default function Congratulations() {
-	const { restartGame } = useGame();
+	const { restartGame, score } = useGame();
 	return (
 		<div className="mt-20 text-white">
 			<h3 className="text-7xl font-bold mb-10">Congratulations! 🎉</h3>
+			<p className="text-3xl font-semibold mb-10">Your Score: {score}</p>
 			<p className="text-xl">You’ve won with sharp focus and skill. Ready for another round?</p>
 			<button
 				type="button"
