@@ -1,7 +1,7 @@
 import { useGame } from '../context/GameContext';
 
 export default function GameControls() {
-	const { score, counter, 
+	const { score, counter, handleInputChange } = useGame();
 	} = useGame();
 	return (
 		<>
@@ -40,6 +40,7 @@ export default function GameControls() {
 						pattern="[0-9]*"
 						className="border-x-0 h-11 font-medium text-center text-gray-900 text-sm block w-full bg-gray-700 border-gray-600 text-white focus:ring-blue-500 focus:border-blue-500"
 						value={counter}
+						onChange={handleInputChange}
 						required
 					/>
 
