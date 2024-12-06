@@ -6,6 +6,9 @@ import { CardType } from '../models/CardType';
 interface GameContextType {
 	counter: number | '';
 	score: number;
+	shuffledCards: CardType[];
+	firstSelectedCard: CardType | null;
+	secondSelectedCard: CardType | null;
 	handleIncrement: () => void;
 	handleDecrement: () => void;
 	handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -19,6 +22,9 @@ const defaultCardState: CardType[] = [{ id: uuidv4(), value: 1, matched: false }
 function GameProvider({ children }: { children: React.ReactNode }) {
 	const [counter, setCounter] = useState<number | ''>(1);
 	const [initialNumbers, setInitialNumbers] = useState<CardType[]>(defaultCardState);
+	const [shuffledCards, setShuffledCards] = useState<CardType[]>([]);
+	const [firstSelectedCard, setFirstSelectedCard] = useState<CardType | null>(null);
+	const [secondSelectedCard, setSecondSelectedCard] = useState<CardType | null>(null);
 	const [score, setScore] = useState<number>(0);
 
 	function handleDecrement() {
@@ -60,6 +66,9 @@ function GameProvider({ children }: { children: React.ReactNode }) {
 	const value: GameContextType = {
 		counter,
 		score,
+		shuffledCards,
+		firstSelectedCard,
+		secondSelectedCard,
 		handleIncrement,
 		handleDecrement,
 		handleInputChange,
