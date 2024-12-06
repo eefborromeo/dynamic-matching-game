@@ -1,8 +1,8 @@
 import { useGame } from '../context/GameContext';
 
 export default function GameControls() {
-	const { score, counter, handleInputChange, handleDecrement, handleIncrement } = useGame();
-	} = useGame();
+	const { score, counter, handleInputChange, handleDecrement, handleIncrement, resetGame } =
+		useGame();
 	return (
 		<>
 			<div className="text-pretty text-4xl font-semibold tracking-tight text-white sm:text-4xl mt-10 mb-4">
@@ -69,7 +69,7 @@ export default function GameControls() {
 			<button
 				type="button"
 				className="mb-16 text-white bg-gradient-to-r from-sky-500 to-indigo-500 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
-				>
+				onClick={resetGame}>
 				Reset Game
 			</button>
 		</>

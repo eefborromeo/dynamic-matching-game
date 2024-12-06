@@ -9,6 +9,7 @@ interface GameContextType {
 	handleIncrement: () => void;
 	handleDecrement: () => void;
 	handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+	resetGame: () => void;
 }
 
 const GameContext = createContext<GameContextType | undefined>(undefined);
@@ -49,6 +50,12 @@ function GameProvider({ children }: { children: React.ReactNode }) {
 		}
 	}
 
+	function resetGame() {
+		setCounter(1);
+		setScore(0);
+		setInitialNumbers([{ id: uuidv4(), value: 1, matched: false }]);
+	}
+
 
 	const value: GameContextType = {
 		counter,
@@ -56,6 +63,7 @@ function GameProvider({ children }: { children: React.ReactNode }) {
 		handleIncrement,
 		handleDecrement,
 		handleInputChange,
+		resetGame,
 	};
 
 	return <GameContext.Provider value={value}>{children}</GameContext.Provider>;
