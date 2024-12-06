@@ -1,7 +1,7 @@
 import { useGame } from '../context/GameContext';
 
 export default function GameControls() {
-	const { score, counter, handleInputChange } = useGame();
+	const { score, counter, handleInputChange, handleDecrement, handleIncrement } = useGame();
 	} = useGame();
 	return (
 		<>
@@ -17,7 +17,7 @@ export default function GameControls() {
 						type="button"
 						id="decrement-button"
 						className="bg-gray-700 hover:bg-gray-600 border border-gray-600 rounded-s-lg p-3 h-11 focus:ring-gray-700 focus:ring-2 focus:outline-none"
-						>
+						onClick={handleDecrement}>
 						<svg
 							className="w-3 h-3 text-gray-900 dark:text-white"
 							aria-hidden="true"
@@ -48,7 +48,7 @@ export default function GameControls() {
 						type="button"
 						id="increment-button"
 						className="bg-gray-700 hover:bg-gray-600 border-gray-600 border rounded-e-lg p-3 h-11 focus:ring-gray-700 focus:ring-2 focus:outline-none"
-						>
+						onClick={handleIncrement}>
 						<svg
 							className="w-3 h-3 text-gray-900 dark:text-white"
 							aria-hidden="true"
