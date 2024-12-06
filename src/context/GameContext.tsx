@@ -1,4 +1,4 @@
-import { createContext, useCallback, useState } from 'react';
+import { createContext, useCallback, useContext, useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import { CardType } from '../models/CardType';
@@ -6,6 +6,7 @@ import { CardType } from '../models/CardType';
 interface GameContextType {
 	counter: number | '';
 	score: number;
+	isGameFinished: boolean;
 	shuffledCards: CardType[];
 	firstSelectedCard: CardType | null;
 	secondSelectedCard: CardType | null;
@@ -15,6 +16,7 @@ interface GameContextType {
 	handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 	handleCardClick: (item: CardType) => void;
 	resetGame: () => void;
+	restartGame: () => void;
 }
 
 const GameContext = createContext<GameContextType | undefined>(undefined);
@@ -29,6 +31,7 @@ function GameProvider({ children }: { children: React.ReactNode }) {
 	const [secondSelectedCard, setSecondSelectedCard] = useState<CardType | null>(null);
 	const [isChecking, setIsChecking] = useState<boolean>(false);
 	const [score, setScore] = useState<number>(0);
+	const [isGameFinished, setIsGameFinished] = useState<boolean>(false);
 
 	function handleDecrement() {
 		if (typeof counter === 'number' && counter > 1) {
@@ -93,6 +96,12 @@ function GameProvider({ children }: { children: React.ReactNode }) {
 		resetSelectedCards();
 		setInitialNumbers([{ id: uuidv4(), value: 1, matched: false }]);
 	}
+
+	function restartGame() {
+		resetGame();
+		setIsGameFinished(false);
+	}
+
 	useEffect(() => {
 		if (firstSelectedCard && secondSelectedCard) {
 			setScore(prev => prev + 1);
@@ -123,9 +132,22 @@ function GameProvider({ children }: { children: React.ReactNode }) {
 		updateShuffledCards();
 	}, [initialNumbers]);
 
+	useEffect(() => {
+		if (shuffledCards.length !== 0) {
+			if (shuffledCards.every(item => item.matched === true)) {
+				const timeout = setTimeout(() => {
+					setIsGameFinished(true);
+				}, 1500);
+
+				return () => clearTimeout(timeout);
+			}
+		}
+	}, [shuffledCards]);
+
 	const value: GameContextType = {
 		counter,
 		score,
+		isGameFinished,
 		shuffledCards,
 		firstSelectedCard,
 		secondSelectedCard,
@@ -135,6 +157,7 @@ function GameProvider({ children }: { children: React.ReactNode }) {
 		handleInputChange,
 		handleCardClick,
 		resetGame,
+		restartGame,
 	};
 
 	return <GameContext.Provider value={value}>{children}</GameContext.Provider>;
