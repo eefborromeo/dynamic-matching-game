@@ -32,6 +32,7 @@ function GameProvider({ children }: { children: React.ReactNode }) {
 
 	function handleDecrement() {
 		if (typeof counter === 'number' && counter > 1) {
+			resetSelectedCards();
 			setCounter(prev => (typeof prev === 'number' && prev > 1 ? prev - 1 : 1));
 			setInitialNumbers(prev => prev.slice(0, -1));
 		}
@@ -39,6 +40,7 @@ function GameProvider({ children }: { children: React.ReactNode }) {
 
 	function handleIncrement() {
 		if (typeof counter === 'number') {
+			resetSelectedCards();
 			setCounter(prev => (typeof prev === 'number' ? prev + 1 : 1));
 			setInitialNumbers(prev => [...prev, { id: uuidv4(), value: counter + 1, matched: false }]);
 		}
@@ -80,9 +82,15 @@ function GameProvider({ children }: { children: React.ReactNode }) {
 		[firstSelectedCard]
 	);
 
+	function resetSelectedCards() {
+		setFirstSelectedCard(null);
+		setSecondSelectedCard(null);
+	}
+
 	function resetGame() {
 		setCounter(1);
 		setScore(0);
+		resetSelectedCards();
 		setInitialNumbers([{ id: uuidv4(), value: 1, matched: false }]);
 	}
 	useEffect(() => {
@@ -99,9 +107,11 @@ function GameProvider({ children }: { children: React.ReactNode }) {
 					)
 				);
 				setIsChecking(false);
+				resetSelectedCards();
 			} else {
 				const timeout = setTimeout(() => {
 					setIsChecking(false);
+					resetSelectedCards();
 				}, 800);
 
 				return () => clearTimeout(timeout);
