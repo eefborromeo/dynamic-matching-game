@@ -1,4 +1,4 @@
-import { createContext, useState } from 'react';
+import { createContext, useCallback, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import { CardType } from '../models/CardType';
@@ -9,9 +9,11 @@ interface GameContextType {
 	shuffledCards: CardType[];
 	firstSelectedCard: CardType | null;
 	secondSelectedCard: CardType | null;
+	isChecking: boolean;
 	handleIncrement: () => void;
 	handleDecrement: () => void;
 	handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+	handleCardClick: (item: CardType) => void;
 	resetGame: () => void;
 }
 
@@ -25,6 +27,7 @@ function GameProvider({ children }: { children: React.ReactNode }) {
 	const [shuffledCards, setShuffledCards] = useState<CardType[]>([]);
 	const [firstSelectedCard, setFirstSelectedCard] = useState<CardType | null>(null);
 	const [secondSelectedCard, setSecondSelectedCard] = useState<CardType | null>(null);
+	const [isChecking, setIsChecking] = useState<boolean>(false);
 	const [score, setScore] = useState<number>(0);
 
 	function handleDecrement() {
@@ -65,12 +68,46 @@ function GameProvider({ children }: { children: React.ReactNode }) {
 		setShuffledCards(generateShuffledCard());
 	}
 
+	const handleCardClick = useCallback(
+		(item: CardType) => {
+			if (!firstSelectedCard) {
+				setFirstSelectedCard(item);
+			} else {
+				setSecondSelectedCard(item);
+				setIsChecking(true);
+			}
+		},
+		[firstSelectedCard]
+	);
 
 	function resetGame() {
 		setCounter(1);
 		setScore(0);
 		setInitialNumbers([{ id: uuidv4(), value: 1, matched: false }]);
 	}
+	useEffect(() => {
+		if (firstSelectedCard && secondSelectedCard) {
+			setScore(prev => prev + 1);
+
+			if (
+				firstSelectedCard.id !== secondSelectedCard.id &&
+				firstSelectedCard.value === secondSelectedCard.value
+			) {
+				setShuffledCards(prevCards =>
+					prevCards.map(card =>
+						card.value === firstSelectedCard.value ? { ...card, matched: true } : card
+					)
+				);
+				setIsChecking(false);
+			} else {
+				const timeout = setTimeout(() => {
+					setIsChecking(false);
+				}, 800);
+
+				return () => clearTimeout(timeout);
+			}
+		}
+	}, [firstSelectedCard, secondSelectedCard]);
 
 	useEffect(() => {
 		updateShuffledCards();
