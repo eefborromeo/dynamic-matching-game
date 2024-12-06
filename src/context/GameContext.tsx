@@ -56,12 +56,25 @@ function GameProvider({ children }: { children: React.ReactNode }) {
 		}
 	}
 
+	function generateShuffledCard() {
+		const duplicated = initialNumbers.map(card => ({ ...card, id: uuidv4() }));
+		return [...initialNumbers, ...duplicated].sort(() => Math.random() - 0.5);
+	}
+
+	function updateShuffledCards() {
+		setShuffledCards(generateShuffledCard());
+	}
+
+
 	function resetGame() {
 		setCounter(1);
 		setScore(0);
 		setInitialNumbers([{ id: uuidv4(), value: 1, matched: false }]);
 	}
 
+	useEffect(() => {
+		updateShuffledCards();
+	}, [initialNumbers]);
 
 	const value: GameContextType = {
 		counter,
