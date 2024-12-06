@@ -1,7 +1,5 @@
 import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import secondaryBg from '../assets/secondary-bg.svg';
-import foreground from '../assets/foreground.svg';
 
 export default function Parallax({
 	setIsStartPage,
@@ -30,31 +28,16 @@ export default function Parallax({
 					</h2>
 				</div>
 				<motion.div
-					className="absolute inset-0 z-0"
+					className="mountains absolute inset-0 z-0"
 					style={{
-						backgroundImage: `url('/mountains.svg')`,
-						backgroundPosition: 'center 70%',
-						backgroundSize: 'contain',
-						backgroundRepeat: 'no-repeat',
 						y: mountainsBackgroundY,
 					}}></motion.div>
 				<motion.div
-					className="absolute inset-0 z-10"
+					className="secondaryBg absolute inset-0 z-10"
 					style={{
-						backgroundImage: `url(${secondaryBg})`,
-						backgroundPosition: 'center 80%',
-						backgroundSize: 'contain',
-						backgroundRepeat: 'no-repeat',
 						y: secondaryBackgroundY,
 					}}></motion.div>
-				<div
-					className="absolute inset-0 z-20"
-					style={{
-						backgroundImage: `url(${foreground})`,
-						backgroundPosition: 'bottom',
-						backgroundSize: 'contain',
-						backgroundRepeat: 'no-repeat',
-					}}></div>
+				<div className="foreground absolute inset-0 z-20"></div>
 			</div>
 			<div className="w-full h-[60vh] overflow-hidden bg-[#1C1A6B] text-center content-center">
 				<p className="w-11/12 md:w-6/12 text-white text-xl md:text-3xl mx-auto text-pretty">

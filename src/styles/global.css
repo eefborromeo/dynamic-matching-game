@@ -1,0 +1,27 @@
+.mountains,
+.secondaryBg,
+.foreground {
+	background-size: contain;
+	background-repeat: no-repeat;
+}
+
+.mountains {
+	background-image: url('../assets/mountains.svg');
+	background-position: center 70%;
+}
+
+.secondaryBg {
+	background-image: url('../assets/secondary-bg.svg');
+	background-position: center 80%;
+}
+
+.foreground {
+	background-image: url('../assets/foreground.svg');
+	background-position: bottom;
+}
+
+@media (max-width: 992px) {
+	.mountains {
+		background-position: center 80%;
+	}
+}
